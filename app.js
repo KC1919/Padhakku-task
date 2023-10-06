@@ -2,10 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+//importing the requests routes
 const router = require('./routes/routes');
-
-
-const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
@@ -16,15 +14,12 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-
-app.use(cookieParser());
-
-
+// importing the router for routing the requests to respective route
 app.use('/api', router);
 
 
+//Starting the server, server listenign for incoming requests
 app.listen(PORT, (err) => {
     console.log('Server listening on port: ' + PORT);
     connectDb();
 })
-

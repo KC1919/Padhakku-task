@@ -4,6 +4,8 @@ const User = require('../models/user');
 
 module.exports.createPost = async (req, res) => {
     try {
+
+        //extracting the post data from request body
         const post = req.body;
 
         // checking if user with userid exists
@@ -24,8 +26,10 @@ module.exports.createPost = async (req, res) => {
                 content: post.content
             }
 
+            //creating new post object
             const newPost = new Post(postData);
 
+            //saving the new post object to the database
             newPost.save().then(response => {
                     res.status(200).json({
                         message: 'Post created successfully',
@@ -53,6 +57,8 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.getUserPosts = async (req, res) => {
     try {
+
+        //geting user id from the request parameter
         const userId = req.params.userId;
 
         // checking if user exists
@@ -67,7 +73,7 @@ module.exports.getUserPosts = async (req, res) => {
             });
         } else {
 
-
+            //fetching user posts
             const userPosts = await Post.find({
                 'userId': userId
             }, {
@@ -91,8 +97,11 @@ module.exports.getUserPosts = async (req, res) => {
 
 module.exports.deletePostById = async (req, res) => {
     try {
+
+        //extracting post od from the request parameter
         const postId = req.params.postId;
 
+        //deleting the post using the post id, if it exists
         Post.deleteOne({
             _id: postId
         }).then(response => {

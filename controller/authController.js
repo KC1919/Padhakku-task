@@ -3,6 +3,8 @@ const User = require('../models/user');
 
 module.exports.register = async (req, res) => {
     try {
+
+        //extracting user data from request body
         const user = req.body;
 
         //making user details object
@@ -11,8 +13,10 @@ module.exports.register = async (req, res) => {
             email: user.email
         }
 
+        //creating new user object
         const newUser = new User(userData);
 
+        //saving the new user data to the database
         newUser.save().then(response => {
                 res.status(200).json({
                     message: 'User created successfully',
